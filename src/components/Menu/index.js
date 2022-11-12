@@ -1,18 +1,16 @@
 import styled from "styled-components";
+import Search from "./Search";
 
 const StyledMenu = styled.header`
 	display: flex;
 	flex-direction: row;
 	height: 56px;
-	max-width: 1600px;
-	margin: 0 auto;
 	justify-content: space-between;
 	background-color: ${({ theme }) => theme.backgroundLevel1 || "#FFFFFF"};
 	border: 1px solid ${({ theme }) => theme.borderBase || "#e5e5e5"};
 	align-items: center;
 	padding: 0 16px;
 	gap: 16px;
-	position: fixed;
 	width: 100%;
 	.logo {
 		width: 100%;
@@ -26,12 +24,13 @@ const StyledMenu = styled.header`
 	}
 `;
 
-export default function Menu() {
+export default function Menu({ setValorDaBusca }) {
 	return (
 		<StyledMenu>
 			<div>
 				<Logo />
 			</div>
+			<Search setValorDaBusca={setValorDaBusca} />
 		</StyledMenu>
 	);
 }

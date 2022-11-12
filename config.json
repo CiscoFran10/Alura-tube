@@ -1,7 +1,9 @@
 {
 	"name": "Thiago Rodrigues",
 	"job": "Front-end Developer",
+	"bg": "https://gifs.eco.br/wp-content/uploads/2021/09/gifs-de-anime-aesthetic-49.gif",
 	"github": "CiscoFran10",
+	"favorites": [{ "link": "CiscoFran10" }, { "link": "Luan" }, {"link": "gabi"}],
 	"playlists": {
 		"jogos": [
 			{

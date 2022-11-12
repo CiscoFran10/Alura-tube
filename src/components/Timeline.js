@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const StyledTimeline = styled.div`
 	width: 100%;
-	max-width: 1600px;
 	overflow: hidden;
 
 	h2 {
@@ -10,14 +9,7 @@ export const StyledTimeline = styled.div`
 		margin-bottom: 16px;
 		text-transform: capitalize;
 	}
-	img {
-		aspect-ratio: 16/9;
-		font-weight: 500;
-		object-fit: cover;
-		width: 100%;
-		max-width: 210px;
-		height: auto;
-	}
+
 	section {
 		width: 100%;
 		padding: 16px;
@@ -25,6 +17,15 @@ export const StyledTimeline = styled.div`
 
 		&:hover ul::-webkit-scrollbar-thumb {
 			background-color: #babac0;
+		}
+
+		img {
+			aspect-ratio: 16/9;
+			font-weight: 500;
+			object-fit: cover;
+			width: 100%;
+			max-width: 210px;
+			height: auto;
 		}
 
 		ul {
@@ -56,16 +57,41 @@ export const StyledTimeline = styled.div`
 			&::-webkit-scrollbar-button {
 				display: none;
 			}
+
+			li {
+				a {
+					scroll-snap-align: start;
+					span {
+						padding-top: 8px;
+						display: block;
+						padding-right: 24px;
+						color: ${({ theme }) => theme.textColorBase || "#222222"};
+					}
+				}
+			}
+		}
+	}
+
+	.favorites {
+		width: 100%;
+		padding: 16px;
+		overflow-x: hidden;
+
+		img {
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			margin: 0 auto;
 		}
 
-		li {
+		ul {
+			display: flex;
+			gap: 16px;
+
 			a {
-				scroll-snap-align: start;
 				span {
-					padding-top: 8px;
-					display: block;
-					padding-right: 24px;
-					color: ${({ theme }) => theme.textColorBase || "#222222"};
+					font-size: 14px;
+					padding-right: 0;
 				}
 			}
 		}

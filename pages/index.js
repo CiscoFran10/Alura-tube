@@ -3,13 +3,10 @@ import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import React from "react";
 
 function HomePage() {
-	const estilosDaHomePage = {
-		// backgroundColor: "red"
-	};
-
-	// console.log(config.playlists);
+	const [valorDaBusca, setValorDaBusca] = React.useState("");
 
 	return (
 		<>
@@ -19,12 +16,17 @@ function HomePage() {
 					display: "flex",
 					flexDirection: "column",
 					maxWidth: "1600px",
-					// backgroundColor: "red",
 				}}
 			>
-				<Menu />
+				<Menu setValorDaBusca={setValorDaBusca} />
 				<Header />
-				<Timeline playlists={config.playlists}>Conteúdo</Timeline>
+				<Timeline
+					valorDaBusca={valorDaBusca}
+					favorites={config.favorites}
+					playlists={config.playlists}
+				>
+					Conteúdo
+				</Timeline>
 			</div>
 		</>
 	);
@@ -33,13 +35,7 @@ function HomePage() {
 export default HomePage;
 
 const StyledHeader = styled.div`
-	img {
-    width: 100%;
-    object-fit: cover;
-		height: 330px;
-	}
 	.user-info {
-		margin-top: 50px;
 		display: flex;
 		align-items: center;
 		width: 100%;
@@ -53,13 +49,17 @@ const StyledHeader = styled.div`
 		}
 	}
 `;
+
+const StyledBanner = styled.div`
+	height: 250px;
+	background: url(${({ bg }) => bg}) no-repeat center;
+	background-size: cover;
+`;
+
 function Header() {
 	return (
 		<StyledHeader>
-			<img
-				src="https://gifs.eco.br/wp-content/uploads/2021/09/gifs-de-anime-aesthetic-49.gif"
-				alt="banner"
-			/>
+			<StyledBanner bg={config.bg} />
 			<section className="user-info">
 				<img src={`https://github.com/${config.github}.png`} />
 				<div>
@@ -71,8 +71,9 @@ function Header() {
 	);
 }
 
-function Timeline(propriedades) {
+function Timeline({ valorDaBusca, ...propriedades }) {
 	const playlistNames = Object.keys(propriedades.playlists);
+	const favoritesList = propriedades.favorites;
 
 	return (
 		<StyledTimeline>
@@ -80,23 +81,45 @@ function Timeline(propriedades) {
 				const videos = propriedades.playlists[playlistName];
 
 				return (
-					<section>
+					<section className="playlists" key={playlistName}>
 						<h2>{playlistName}</h2>
 						<ul>
-							{videos.map((video) => {
-								return (
-									<li>
-										<a href={video.url}>
-											<img src={video.thumb} />
-											<span>{video.title}</span>
-										</a>
-									</li>
-								);
-							})}
+							{videos
+								.filter((video) => {
+									return video.title
+										.toLowerCase()
+										.includes(valorDaBusca.toLowerCase());
+								})
+								.map((video) => {
+									return (
+										<li key={video.title}>
+											<a href={video.url}>
+												<img src={video.thumb} />
+												<span>{video.title}</span>
+											</a>
+										</li>
+									);
+								})}
 						</ul>
 					</section>
 				);
 			})}
+			<section className="favorites">
+				<h2>AluraTubes Favoritos</h2>
+				<ul>
+					{favoritesList.map((favorite) => (
+						<li key={favorite.link}>
+							<a href={`https://github.com/${favorite.link}`}>
+								<img
+									src={`https://github.com/${favorite.link}.png`}
+									alt={favorite.name}
+								/>
+								<span>@{favorite.link}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
 		</StyledTimeline>
 	);
 }
